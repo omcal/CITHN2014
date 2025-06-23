@@ -1,5 +1,5 @@
 {
-  "name": "gemini-ai-app",
+  "name": "content-generator",
   "version": "1.0.0",
   "type": "module",
   "description": "AI-powered application built with MERN stack and Gemini API",
@@ -13,7 +13,7 @@
     "data:destroy": "node backend/seeder -d",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
-  "author": "Your Name",
+  "author": "Group 9",
   "license": "MIT",
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
