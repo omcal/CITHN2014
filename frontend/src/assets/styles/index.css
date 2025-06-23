@@ -2,6 +2,12 @@ main {
   min-height: 80vh;
 }
 
+.navbar-brand img {
+  height: 2em;
+  vertical-align: middle
+}
+
+
 .rating span {
   margin: 0.1rem;
 }
