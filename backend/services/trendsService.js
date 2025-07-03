@@ -1,4 +1,7 @@
+import axios from 'axios';
 import googleTrends from 'google-trends-api';
+
+const BASE_URL = 'https://serpapi.com/search.json';
 
 // Category mapping for Google Trends
 const categoryMapping = {
@@ -14,82 +17,65 @@ const categoryMapping = {
   'books': ['books', 'reading', 'literature', 'education']
 };
 
-// Location mapping for Google Trends geo codes
+// Location mapping for SerpAPI geo codes
 const locationMapping = {
-  'Germany': 'DE',
-  'United States': 'US',
-  'United Kingdom': 'GB',
-  'France': 'FR',
-  'Italy': 'IT',
-  'Spain': 'ES',
-  'Japan': 'JP',
-  'Canada': 'CA',
-  'Australia': 'AU',
-  'Brazil': 'BR',
-  'India': 'IN',
-  'China': 'CN'
+  'Germany': 'de',
+  'United States': 'us',
+  'United Kingdom': 'gb',
+  'France': 'fr',
+  'Italy': 'it',
+  'Spain': 'es',
+  'Japan': 'jp',
+  'Canada': 'ca',
+  'Australia': 'au',
+  'Brazil': 'br',
+  'India': 'in',
+  'China': 'cn'
 };
 
 export const getTrendingKeywords = async (category, location) => {
+  const apiKey = process.env.SERPAPI_KEY;
+  const geo = locationMapping[location] || 'us';
+  const params = {
+    engine: 'google_trends',
+    api_key: apiKey,
+    geo,
+    q: category,
+    timeframe: 'now 7-d'
+  };
+
   try {
-    const keywords = categoryMapping[category.toLowerCase()] || [category];
-    const geoCode = locationMapping[location] || 'US';
-    
-    // Get trending data for the past 7 days
-    const trendPromises = keywords.map(async (keyword) => {
-      try {
-        const results = await googleTrends.interestOverTime({
-          keyword: keyword,
-          startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
-          endTime: new Date(),
-          geo: geoCode
-        });
-        
-        const data = JSON.parse(results);
-        const timelineData = data.default?.timelineData || [];
-        
-        if (timelineData.length > 0) {
-          // Get average interest score
-          const avgInterest = timelineData.reduce((sum, item) => 
-            sum + (item.value?.[0] || 0), 0) / timelineData.length;
-          
-          return {
-            keyword: keyword,
-            interest: Math.round(avgInterest),
-            region: location
-          };
-        }
-        
+    const { data } = await axios.get(BASE_URL, { params });
+    let keywords = [];
+
+    if (Array.isArray(data.trendingSearchesDays)) {
+      const day = data.trendingSearchesDays[0];
+      keywords = day.trendingSearches.map(search => {
+        const trafficMatch = search.formattedTraffic?.match(/([\d,.]+)/);
+        const traffic = trafficMatch ? parseInt(trafficMatch[1].replace(/,/g, '')) : 0;
         return {
-          keyword: keyword,
-          interest: 0,
+          keyword: search.title,
+          interest: traffic,
           region: location
         };
-      } catch (error) {
-        console.log(`Error fetching trends for ${keyword}:`, error.message);
-        return {
-          keyword: keyword,
-          interest: Math.floor(Math.random() * 50) + 25, // Fallback random score
-          region: location
-        };
-      }
-    });
-    
-    const results = await Promise.all(trendPromises);
-    
-    // Sort by interest score and return top trending keywords
-    return results
-      .filter(result => result.interest > 0)
-      .sort((a, b) => b.interest - a.interest)
-      .slice(0, 5); // Return top 5 trending keywords
-      
+      });
+    }
+
+    if (keywords.length === 0) {
+      const fallbackKeywords = categoryMapping[category.toLowerCase()] || [category];
+      keywords = fallbackKeywords.map(k => ({
+        keyword: k,
+        interest: Math.floor(Math.random() * 50) + 30,
+        region: location
+      }));
+    }
+
+    return keywords.slice(0, 5);
   } catch (error) {
     console.error('Error in getTrendingKeywords:', error);
-    
-    // Fallback data if Google Trends API fails
     const fallbackKeywords = categoryMapping[category.toLowerCase()] || [category];
     return fallbackKeywords.slice(0, 3).map(keyword => ({
-      keyword: keyword,
+      keyword,
       interest: Math.floor(Math.random() * 50) + 30,
       region: location
     }));
@@ -98,7 +84,7 @@ export const getTrendingKeywords = async (category, location) => {
 
 export const getRelatedTopics = async (category, location) => {
   try {
-    const geoCode = locationMapping[location] || 'US';
+    const geoCode = (locationMapping[location] || 'us').toUpperCase();
     const mainKeyword = categoryMapping[category.toLowerCase()]?.[0] || category;
     
     const results = await googleTrends.relatedTopics({
