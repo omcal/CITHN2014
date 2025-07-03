@@ -66,6 +66,7 @@ PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
 GEMINI_API_KEY=your_gemini_api_key
+SERPAPI_KEY=your_serpapi_key
 ```
 
 **Important**: Replace all placeholder values with your actual credentials.
@@ -215,6 +216,7 @@ ai-content-creator/
 - `POST /api/content/draft` - Create new content draft
 - `POST /api/content/modify` - Modify existing content
 - `POST /api/content/image-prompt` - Generate image prompts
+- `GET /api/trends/now` - Trending searches from SerpAPI (query params: category, location)
 
 ### Project Management
 - `GET /api/content/projects` - Get user's projects
