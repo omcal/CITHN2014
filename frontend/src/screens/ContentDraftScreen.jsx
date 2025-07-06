@@ -11,7 +11,7 @@ const ContentDraftScreen = () => {
     location: 'Germany',
     language: 'English',
     tone: 'professional',
-    category: 'electronics',
+    category: 'Technology',
     contentIntent: '',
     desiredLength: '300-400 words'
   });
@@ -43,7 +43,7 @@ const ContentDraftScreen = () => {
   ];
 
   const categories = [
-    'luxury', 'apparel', 'electronics', 'fashion', 'toys', 
+    'luxury', 'apparel', 'Technology', 'fashion', 'toys', 
     'home-garden', 'sports', 'beauty', 'automotive', 'books'
   ];
 

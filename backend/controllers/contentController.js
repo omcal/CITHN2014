@@ -452,7 +452,7 @@ ${trendingKeywords.map(keyword =>
 **Technical Specifications:**
 - Resolution: High-definition (minimum 1920x1080)
 - Format: Professional commercial photography style
-- Perspective: ${category === 'fashion' ? 'Model or lifestyle photography angle' : category === 'electronics' ? 'Product photography with detail shots' : 'Appropriate angle for ' + category + ' presentation'}
+- Perspective: ${category === 'fashion' ? 'Model or lifestyle photography angle' : category === 'Technology' ? 'Product photography with detail shots' : 'Appropriate angle for ' + category + ' presentation'}
 - Quality: Commercial-grade, marketing-ready imagery
 
 **Final Note:** Ensure the image conveys ${tone} messaging and appeals to ${language}-speaking customers in ${location}. The visual should enhance the content message while incorporating trending elements: ${trendKeywordsText}.

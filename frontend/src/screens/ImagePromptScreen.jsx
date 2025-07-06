@@ -11,7 +11,7 @@ const ImagePromptScreen = () => {
     location: 'Germany',
     language: 'English',
     tone: 'professional',
-    category: 'electronics',
+    category: 'Technology',
     baseContent: '',
     visualStyle: 'minimalistic, high-contrast background'
   });
@@ -43,7 +43,7 @@ const ImagePromptScreen = () => {
   ];
 
   const categories = [
-    'luxury', 'apparel', 'electronics', 'fashion', 'toys', 
+    'luxury', 'apparel', 'Technology', 'fashion', 'toys', 
     'home-garden', 'sports', 'beauty', 'automotive', 'books'
   ];
 

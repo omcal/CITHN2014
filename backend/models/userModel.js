@@ -37,7 +37,7 @@ const userSchema = mongoose.Schema(
       },
       defaultCategory: {
         type: String,
-        default: 'electronics'
+        default: 'Technology'
       }
     },
     // Usage statistics

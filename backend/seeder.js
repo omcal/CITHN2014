@@ -21,7 +21,7 @@ const users = [
       defaultLocation: 'United States',
       defaultLanguage: 'English',
       defaultTone: 'professional',
-      defaultCategory: 'electronics'
+      defaultCategory: 'Technology'
     }
   },
   {
@@ -70,7 +70,7 @@ const sampleProjects = [
     location: 'Germany',
     language: 'English',
     tone: 'persuasive',
-    category: 'electronics',
+    category: 'Technology',
     contentIntent: 'Promotional blog post about smart home devices for the German market',
     desiredLength: '400-500 words',
     status: 'completed',
@@ -104,7 +104,7 @@ Smart home technology represents the perfect blend of innovation and practicalit
     location: 'United States',
     language: 'English',
     tone: 'professional',
-    category: 'electronics',
+    category: 'Technology',
     originalContent: 'Our new tablet has a good battery life and a decent screen resolution.',
     modificationType: 'elaborate',
     status: 'completed',

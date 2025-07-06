@@ -34,7 +34,7 @@ const contentProjectSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ['luxury', 'apparel', 'electronics', 'fashion', 'toys', 'home-garden', 'sports', 'beauty', 'automotive', 'books']
+    enum: ['luxury', 'apparel', 'Technology', 'fashion', 'toys', 'home-garden', 'sports', 'beauty', 'automotive', 'books']
   },
   
   // Content Drafting specific fields

@@ -17,7 +17,7 @@ const ProfileScreen = () => {
     defaultLocation: 'United States',
     defaultLanguage: 'English',
     defaultTone: 'professional',
-    defaultCategory: 'electronics'
+    defaultCategory: 'Technology'
   });
 
   const { userInfo } = useSelector((state) => state.auth);
@@ -80,7 +80,7 @@ const ProfileScreen = () => {
   ];
 
   const categories = [
-    'luxury', 'apparel', 'electronics', 'fashion', 'toys', 
+    'luxury', 'apparel', 'Technology', 'fashion', 'toys', 
     'home-garden', 'sports', 'beauty', 'automotive', 'books'
   ];
 
