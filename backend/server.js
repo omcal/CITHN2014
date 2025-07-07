@@ -10,7 +10,6 @@ import { setupDatabase } from './config/dbSetup.js';
 import userRoutes from './routes/userRoutes.js';
 import geminiRoutes from './routes/geminiRoutes.js';
 import contentRoutes from './routes/contentRoutes.js';
-import trendsRoutes from './routes/trendsRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 const port = process.env.PORT || 5000;
@@ -30,7 +29,6 @@ app.use(cookieParser());
 app.use('/api/users', userRoutes);
 app.use('/api/gemini', geminiRoutes);
 app.use('/api/content', contentRoutes);
-app.use('/api/trends', trendsRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   const __dirname = path.resolve();
