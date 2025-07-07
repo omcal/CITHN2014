@@ -216,7 +216,6 @@ ai-content-creator/
 - `POST /api/content/draft` - Create new content draft
 - `POST /api/content/modify` - Modify existing content
 - `POST /api/content/image-prompt` - Generate image prompts
-- `GET /api/trends/now` - Trending searches from SerpAPI (query params: category, location)
 
 ### Project Management
 - `GET /api/content/projects` - Get user's projects
