@@ -11,7 +11,7 @@ const ContentDraftScreen = () => {
     location: 'Germany',
     language: 'English',
     tone: 'professional',
-    category: 'electronics',
+    category: 'Technology',
     contentIntent: '',
     desiredLength: '300-400 words'
   });
@@ -43,7 +43,7 @@ const ContentDraftScreen = () => {
   ];
 
   const categories = [
-    'luxury', 'apparel', 'electronics', 'fashion', 'toys', 
+    'luxury', 'apparel', 'Technology', 'fashion', 'toys', 
     'home-garden', 'sports', 'beauty', 'automotive', 'books'
   ];
 
@@ -76,11 +76,21 @@ const ContentDraftScreen = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to generate content');
+        const errorText = await response.text();
+        let errorMessage = 'Failed to generate content';
+        
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.message || errorMessage;
+        } catch {
+          errorMessage = errorText || errorMessage;
+        }
+        
+        throw new Error(errorMessage);
       }
+
+      const data = await response.json();
 
       setResult(data);
     } catch (err) {
@@ -250,7 +260,7 @@ const ContentDraftScreen = () => {
                 <Card.Header>
                   <h4 className="mb-0">Generated Content</h4>
                   <small className="text-muted">
-                    Project: {result.project.title}
+                    Project: {result.project?.title || 'Generated Content'}
                   </small>
                 </Card.Header>
                 <Card.Body>

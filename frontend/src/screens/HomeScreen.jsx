@@ -68,7 +68,7 @@ const HomeScreen = () => {
               </Col>
             </Row>
             
-            <Row className="mt-4">
+            <Row className="mt-4 justify-content-center">
               <Col md={6} className="mb-4">
                 <Card className="h-100 shadow-sm">
                   <Card.Body className="text-center">
@@ -79,21 +79,6 @@ const HomeScreen = () => {
                     </Card.Text>
                     <Button as={Link} to="/projects" variant="outline-primary">
                       View Projects
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-              
-              <Col md={6} className="mb-4">
-                <Card className="h-100 shadow-sm">
-                  <Card.Body className="text-center">
-                    <Card.Title>💬 AI Assistant</Card.Title>
-                    <Card.Text>
-                      Need help or have questions? Chat directly with our 
-                      AI assistant for guidance and support.
-                    </Card.Text>
-                    <Button as={Link} to="/chat" variant="outline-secondary">
-                      Chat Now
                     </Button>
                   </Card.Body>
                 </Card>

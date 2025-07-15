@@ -8,6 +8,9 @@ const Footer = () => {
       <Container>
         <Row>
           <Col className='text-center py-3'>
+            <div className="alert alert-info mb-3">
+              <small><strong>Disclaimer:</strong> Generated results are suggestions only and should be reviewed before public use.</small>
+            </div>
             <p>AI Content Creator &copy; {currentYear}</p>
           </Col>
         </Row>

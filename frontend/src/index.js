@@ -13,9 +13,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute';
 import HomeScreen from './screens/HomeScreen';
-import ChatScreen from './screens/ChatScreen';
-import ConversationsScreen from './screens/ConversationsScreen';
-import ConversationDetailScreen from './screens/ConversationDetailScreen';
 import ContentDraftScreen from './screens/ContentDraftScreen';
 import ContentModifyScreen from './screens/ContentModifyScreen';
 import ImagePromptScreen from './screens/ImagePromptScreen';
@@ -42,9 +39,6 @@ const router = createBrowserRouter(
         <Route path='/content/image-prompt' element={<ImagePromptScreen />} />
         <Route path='/projects' element={<ProjectsScreen />} />
         <Route path='/project/:id' element={<ProjectDetailScreen />} />
-        <Route path='/chat' element={<ChatScreen />} />
-        <Route path='/conversations' element={<ConversationsScreen />} />
-        <Route path='/conversation/:id' element={<ConversationDetailScreen />} />
         <Route path='/profile' element={<ProfileScreen />} />
       </Route>
       {/* Admin users */}

@@ -8,10 +8,8 @@ import Message from '../components/Message';
 const ContentModifyScreen = () => {
   const [formData, setFormData] = useState({
     title: '',
-    location: 'Germany',
     language: 'English',
     tone: 'professional',
-    category: 'electronics',
     originalContent: '',
     modificationType: 'rephrase'
   });
@@ -27,11 +25,6 @@ const ContentModifyScreen = () => {
     return null;
   }
 
-  const locations = [
-    'Germany', 'United States', 'United Kingdom', 'France', 'Italy', 
-    'Spain', 'Japan', 'Canada', 'Australia', 'Brazil', 'India', 'China'
-  ];
-
   const languages = [
     'English', 'German', 'French', 'Spanish', 'Italian', 'Portuguese', 
     'Japanese', 'Chinese', 'Hindi', 'Arabic'
@@ -40,11 +33,6 @@ const ContentModifyScreen = () => {
   const tones = [
     'persuasive', 'professional', 'friendly', 'casual', 'formal', 
     'enthusiastic', 'informative'
-  ];
-
-  const categories = [
-    'luxury', 'apparel', 'electronics', 'fashion', 'toys', 
-    'home-garden', 'sports', 'beauty', 'automotive', 'books'
   ];
 
   const modificationTypes = [
@@ -82,11 +70,21 @@ const ContentModifyScreen = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to modify content');
+        const errorText = await response.text();
+        let errorMessage = 'Failed to modify content';
+        
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.message || errorMessage;
+        } catch {
+          errorMessage = errorText || errorMessage;
+        }
+        
+        throw new Error(errorMessage);
       }
+
+      const data = await response.json();
 
       setResult(data);
     } catch (err) {
@@ -120,36 +118,17 @@ const ContentModifyScreen = () => {
                 {error && <Message variant="danger">{error}</Message>}
                 
                 <Form onSubmit={handleSubmit}>
-                  <Row>
-                    <Col md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Project Title *</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="title"
-                          value={formData.title}
-                          onChange={handleInputChange}
-                          placeholder="e.g., Product Description Revision"
-                          required
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Target Location *</Form.Label>
-                        <Form.Select
-                          name="location"
-                          value={formData.location}
-                          onChange={handleInputChange}
-                          required
-                        >
-                          {locations.map(location => (
-                            <option key={location} value={location}>{location}</option>
-                          ))}
-                        </Form.Select>
-                      </Form.Group>
-                    </Col>
-                  </Row>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Project Title *</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="title"
+                      value={formData.title}
+                      onChange={handleInputChange}
+                      placeholder="e.g., Product Description Revision"
+                      required
+                    />
+                  </Form.Group>
 
                   <Row>
                     <Col md={6}>
@@ -186,45 +165,24 @@ const ContentModifyScreen = () => {
                     </Col>
                   </Row>
 
-                  <Row>
-                    <Col md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Category *</Form.Label>
-                        <Form.Select
-                          name="category"
-                          value={formData.category}
-                          onChange={handleInputChange}
-                          required
-                        >
-                          {categories.map(category => (
-                            <option key={category} value={category}>
-                              {category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ')}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </Form.Group>
-                    </Col>
-                    <Col md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Modification Type *</Form.Label>
-                        <Form.Select
-                          name="modificationType"
-                          value={formData.modificationType}
-                          onChange={handleInputChange}
-                          required
-                        >
-                          {modificationTypes.map(type => (
-                            <option key={type.value} value={type.value}>
-                              {type.label}
-                            </option>
-                          ))}
-                        </Form.Select>
-                        <Form.Text className="text-muted">
-                          {modificationTypes.find(t => t.value === formData.modificationType)?.description}
-                        </Form.Text>
-                      </Form.Group>
-                    </Col>
-                  </Row>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Modification Type *</Form.Label>
+                    <Form.Select
+                      name="modificationType"
+                      value={formData.modificationType}
+                      onChange={handleInputChange}
+                      required
+                    >
+                      {modificationTypes.map(type => (
+                        <option key={type.value} value={type.value}>
+                          {type.label}
+                        </option>
+                      ))}
+                    </Form.Select>
+                    <Form.Text className="text-muted">
+                      {modificationTypes.find(t => t.value === formData.modificationType)?.description}
+                    </Form.Text>
+                  </Form.Group>
 
                   <Form.Group className="mb-4">
                     <div className="d-flex justify-content-between align-items-center">
@@ -277,21 +235,10 @@ const ContentModifyScreen = () => {
                 <Card.Header>
                   <h4 className="mb-0">Modified Content</h4>
                   <small className="text-muted">
-                    Project: {result.project.title} | Action: {formData.modificationType}
+                    Project: {result.project?.title || 'Modified Content'} | Action: {formData.modificationType}
                   </small>
                 </Card.Header>
                 <Card.Body>
-                  {result.trendingKeywords && result.trendingKeywords.length > 0 && (
-                    <div className="mb-3">
-                      <h6>Trending Keywords Applied:</h6>
-                      {result.trendingKeywords.map((keyword, index) => (
-                        <Badge key={index} bg="info" className="me-2">
-                          {keyword.keyword} ({keyword.interest}%)
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
-                  
                   <Row>
                     <Col md={6}>
                       <h6>Original Content:</h6>

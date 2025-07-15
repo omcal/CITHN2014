@@ -11,7 +11,7 @@ const ImagePromptScreen = () => {
     location: 'Germany',
     language: 'English',
     tone: 'professional',
-    category: 'electronics',
+    category: 'Technology',
     baseContent: '',
     visualStyle: 'minimalistic, high-contrast background'
   });
@@ -43,7 +43,7 @@ const ImagePromptScreen = () => {
   ];
 
   const categories = [
-    'luxury', 'apparel', 'electronics', 'fashion', 'toys', 
+    'luxury', 'apparel', 'Technology', 'fashion', 'toys', 
     'home-garden', 'sports', 'beauty', 'automotive', 'books'
   ];
 
@@ -87,11 +87,21 @@ const ImagePromptScreen = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to generate image prompt');
+        const errorText = await response.text();
+        let errorMessage = 'Failed to generate image prompt';
+        
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.message || errorMessage;
+        } catch {
+          errorMessage = errorText || errorMessage;
+        }
+        
+        throw new Error(errorMessage);
       }
+
+      const data = await response.json();
 
       setResult(data);
     } catch (err) {
@@ -290,7 +300,7 @@ const ImagePromptScreen = () => {
                 <Card.Header>
                   <h4 className="mb-0">Generated Image Prompt</h4>
                   <small className="text-muted">
-                    Project: {result.project.title}
+                    Project: {result.project?.title || 'Image Prompt'}
                   </small>
                 </Card.Header>
                 <Card.Body>

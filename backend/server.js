@@ -8,7 +8,6 @@ import cors from 'cors';
 import connectDB from './config/db.js';
 import { setupDatabase } from './config/dbSetup.js';
 import userRoutes from './routes/userRoutes.js';
-import geminiRoutes from './routes/geminiRoutes.js';
 import contentRoutes from './routes/contentRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
@@ -27,7 +26,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/api/users', userRoutes);
-app.use('/api/gemini', geminiRoutes);
 app.use('/api/content', contentRoutes);
 
 if (process.env.NODE_ENV === 'production') {

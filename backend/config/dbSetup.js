@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import User from '../models/userModel.js';
 import ContentProject from '../models/contentProjectModel.js';
-import Conversation from '../models/conversationModel.js';
 
 export const setupDatabase = async () => {
   try {
@@ -18,9 +17,6 @@ export const setupDatabase = async () => {
     await ContentProject.collection.createIndex({ location: 1, category: 1 });
     await ContentProject.collection.createIndex({ 'trendingKeywords.keyword': 1 });
     
-    // Conversation indexes
-    await Conversation.collection.createIndex({ user: 1, updatedAt: -1 });
-    await Conversation.collection.createIndex({ createdAt: -1 });
 
     console.log('Database indexes created successfully!');
 
@@ -52,7 +48,6 @@ export const getDatabaseStats = async () => {
   try {
     const userCount = await User.countDocuments();
     const projectCount = await ContentProject.countDocuments();
-    const conversationCount = await Conversation.countDocuments();
     
     const projectStats = await ContentProject.aggregate([
       {
@@ -75,7 +70,6 @@ export const getDatabaseStats = async () => {
     return {
       users: userCount,
       projects: projectCount,
-      conversations: conversationCount,
       projectsByType: projectStats,
       projectsByStatus: statusStats
     };

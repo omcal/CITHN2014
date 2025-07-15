@@ -20,7 +20,9 @@ const contentProjectSchema = new mongoose.Schema({
   // Common inputs for all project types
   location: {
     type: String,
-    required: true
+    required: function() {
+      return this.projectType !== 'content-modification';
+    }
   },
   language: {
     type: String,
@@ -33,8 +35,10 @@ const contentProjectSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: true,
-    enum: ['luxury', 'apparel', 'electronics', 'fashion', 'toys', 'home-garden', 'sports', 'beauty', 'automotive', 'books']
+    required: function() {
+      return this.projectType !== 'content-modification';
+    },
+    enum: ['luxury', 'apparel', 'Technology', 'fashion', 'toys', 'home-garden', 'sports', 'beauty', 'automotive', 'books']
   },
   
   // Content Drafting specific fields

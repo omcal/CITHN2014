@@ -1,5 +1,5 @@
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { FaUser, FaComments, FaPlusCircle, FaChartBar } from 'react-icons/fa';
+import { FaUser, FaPlusCircle, FaChartBar } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { useLogoutMutation } from '../slices/usersApiSlice';
@@ -50,9 +50,6 @@ const Header = () => {
                   </NavDropdown>
                   <Nav.Link as={Link} to='/projects'>
                     <FaChartBar /> Projects
-                  </Nav.Link>
-                  <Nav.Link as={Link} to='/chat'>
-                    <FaComments /> AI Chat
                   </Nav.Link>
                 </>
               )}
