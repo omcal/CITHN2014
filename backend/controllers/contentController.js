@@ -108,14 +108,7 @@ Location: Location of the relevant trend data, such as "Germany" or "England"
 - Fits the given task.
 3.Ensure the draft is coherent, compelling, and suitable for the e-commerce context.
  
-Follow these rules:
-Only use the trend data from ${trendKeywordsText} corresponding to the specified location and toys. 
-Do not include keywords or trends unrelated to toys. 
-Only return the blog post draft. Do not add any explanation or commentary.
-If given, stay within the specified word count range, do not exceed it. 
-Do not include headings unless required by the tone or style.
-Mention about the trends, do not mention the exact scores.
-Do not write the given input, analyze of this data or the cleaned version of this data, the things you have done or you will do. Reply this message with only pure the blog post draft.
+
  
 Use this format for your response:
 - Language: ${language}  
@@ -146,9 +139,8 @@ Now, generate an initial promotional blog post draft based on trend data and use
 - Language: ${language}
 - Tone: ${tone}
 - Category: ${category}
-- Given Task: ${contentIntent}
+- Given Task: ${contentIntent}.
 - Word Count: ${desiredLength}
-
 Profile/Role
 Context
 Workflow
@@ -156,6 +148,20 @@ Constraints
 Output Format/Style
 Examples
 Directive
+
+Follow these rules:
+Only use the trend data from ${trendKeywordsText} corresponding to the specified location and toys. 
+Do not include keywords or trends unrelated to toys. 
+Only return the blog post draft. Do not add any explanation or commentary.
+If given, stay within the specified word count range, do not exceed it. 
+Do not include headings unless required by the tone or style.
+Mention about the trends, do not mention the exact scores.
+Do not write the given input, analyze of this data or the cleaned version of this data, the things you have done or you will do. Reply this message with only pure the blog post draft.
+Please when using ${contentIntent} always check if this is purposed
+to be social media contenting. If it requests something or tries to give information which are irrelevant to chosen; ${language}, ${category}, ${tone},
+${location} and content creation please always give the following response:
+"Please give related content and dont abuse this application. If you continue to try abusing this app
+you will be perma-banned"
 
 `;
 
